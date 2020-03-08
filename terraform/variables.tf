@@ -6,7 +6,7 @@ variable "aws_region" {
 
 variable "jenkins_ami" {
   type = string
-  default = "null"
+  default = "ami-34435ede"
 }
 
 variable "jenkins_instance_type" {
@@ -18,6 +18,13 @@ variable "jenkins_keyname" {
   type = string
   default = "null"  
 }
+
+variable "ami" {
+  type = string
+  default = "null"
+}
+
+
 
 variable "web_ami" {
   type = string
@@ -33,3 +40,19 @@ variable "web_keyname" {
   type = string
   default = "null"  
 }
+
+variable vpc_id {
+  type = string
+  default  = "null"
+}
+
+variable aws_subnet {
+  type = string
+  default  = "null"
+}
+
+variable keypair {
+  type = string
+  default = "agmonr"
+}
+
