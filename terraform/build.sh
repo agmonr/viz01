@@ -1,5 +1,7 @@
 #!/bin/bash
 # Script to run terraform
+set -e
+
 Terraform=$( which terraform )
 [ -z $Terraform ] && echo 'Please install terraform and make sure it is in tour $PATH.' && exit 2
 [ "$( terraform --version | head -n 1 | grep -c 'v0.12')" == '0' ] && echo "Please use terraform version 12" && exit 2 
