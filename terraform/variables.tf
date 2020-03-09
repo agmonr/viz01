@@ -14,17 +14,10 @@ variable "jenkins_instance_type" {
   default = "a1.medium"
 }
 
-variable "jenkins_keyname" {
-  type = string
-  default = "null"  
-}
-
 variable "ami" {
   type = string
-  default = "null"
+  default = "ami-34435ede"
 }
-
-
 
 variable "web_ami" {
   type = string
