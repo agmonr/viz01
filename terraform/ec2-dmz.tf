@@ -15,6 +15,9 @@ resource "aws_instance" "vpnserver" {
   private_ip    = "10.0.3.10"
   subnet_id     = aws_subnet.dmz.id 
   key_name      = var.keypair
+  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
+  
+  
   tags = {
     Name = "vpnserver"
   }  

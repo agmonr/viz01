@@ -7,6 +7,8 @@ Terraform=$( which terraform )
 [ "$( terraform --version | head -n 1 | grep -c 'v0.12')" == '0' ] && echo "Please use terraform version 12" && exit 2 
  
 #"${Terraform}" destroy
-#"${Terraform}" init
+"${Terraform}" init
 "${Terraform}" plan -out tf.plan
 "${Terraform}" apply tf.plan
+"${Terraform}" show 
+
