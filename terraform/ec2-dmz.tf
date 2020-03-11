@@ -9,6 +9,22 @@ resource "aws_subnet" "dmz" {
   }
 }
 
+
+locals {
+  instance-vpnserver-userdata = <<EOF
+#!/bin/bash
+export PATH=$PATH:/usr/local/bin
+apt-get update
+sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+EOF
+}
+
 resource "aws_instance" "vpnserver" {
   ami           = var.ami
   instance_type = "t2.micro"
@@ -16,12 +32,14 @@ resource "aws_instance" "vpnserver" {
   subnet_id     = aws_subnet.dmz.id 
   key_name      = var.keypair
   vpc_security_group_ids = [aws_security_group.allow_ssh.id]
-  
-  
+  user_data_base64 = base64encode(local.instance-vpnserver-userdata)
+
+
   tags = {
     Name = "vpnserver"
   }  
 }
+
 
 resource "aws_eip" "lb" {
   vpc      = true
