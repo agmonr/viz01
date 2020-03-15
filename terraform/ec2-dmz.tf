@@ -9,16 +9,19 @@ resource "aws_subnet" "dmz" {
   }
 }
 
-
+# TODO: split to docker installation and docker run as a service
 locals {
   instance-vpnserver-userdata = <<EOF
+#!/bin/bash
+export DEBIAN_FRONTEND=noninteractive
 apt-get update
-apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+apt-get -y install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 apt-key fingerprint 0EBFCD88
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 apt-get update
-apt-get install docker-ce docker-ce-cli containerd.io "> /run/bootstrap.sh 
+apt-get install -y docker-ce docker-ce-cli containerd.io
+# docker run jenkins
 EOF
 }
 
